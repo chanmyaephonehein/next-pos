@@ -1,10 +1,21 @@
 // pages / backoffice / index.tsx
 
+import Layout from "@/Layout/layout";
 import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const BackofficeApp = () => {
+  const { data, status } = useSession();
+  const router = useRouter();
   const [user, setUser] = useState({ name: "", email: "" });
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/auth/login");
+    }
+  }, [status]);
 
   const handleCreateNewUser = async () => {
     const isValid = user.name && user.email;
@@ -17,7 +28,7 @@ const BackofficeApp = () => {
   };
 
   return (
-    <Box>
+    <Layout>
       <Box
         sx={{
           display: "flex",
@@ -46,7 +57,7 @@ const BackofficeApp = () => {
           Create new user
         </Button>
       </Box>
-    </Box>
+    </Layout>
   );
 };
 
