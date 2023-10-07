@@ -15,7 +15,7 @@ const SignIn = () => {
           sx={{ width: "fit-content", mt: 2 }}
           onClick={() => signIn("google", { callbackUrl: "/backoffice" })}
         >
-          Log in
+          Sign In
         </Button>
       </Box>
     </Layout>

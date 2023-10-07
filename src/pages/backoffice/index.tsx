@@ -17,6 +17,8 @@ const BackofficeApp = () => {
     }
   }, [status]);
 
+  if (status === "unauthenticated") return null;
+
   const handleCreateNewUser = async () => {
     const isValid = user.name && user.email;
     if (!isValid) return alert("Name and email are required.");
