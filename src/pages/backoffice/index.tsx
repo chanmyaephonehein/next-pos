@@ -1,6 +1,6 @@
 // pages / backoffice / index.tsx
 
-import Layout from "@/Layout/layout";
+import Layout from "@/pages/Layout/layout";
 import { Box, Button, TextField } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

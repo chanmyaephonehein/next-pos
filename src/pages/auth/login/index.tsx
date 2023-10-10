@@ -1,6 +1,6 @@
 // pages / auth / signin / index.tsx
 
-import Layout from "@/Layout/layout";
+import Layout from "@/pages/Layout/layout";
 import { Box, Button } from "@mui/material";
 import { signIn } from "next-auth/react";
 
