@@ -3,7 +3,7 @@ import addonCategoriesSlice from "./slices/addonCategoriesSlice";
 import addonsSlice from "./slices/addonsSlice";
 import appSlice from "./slices/appSlice";
 import cartSlice from "./slices/cartSlice";
-import companySlice from "./slices/companySlices";
+import companySlice from "./slices/companySlice";
 import locationsSlice from "./slices/locationsSlice";
 import menuCategoriesSlice from "./slices/menuCategoriesSlice";
 import menusAddonCategoriesSlice from "./slices/menusAddonCategoriesSlice";
