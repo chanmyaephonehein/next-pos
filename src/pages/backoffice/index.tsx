@@ -14,10 +14,10 @@ const BackOfficeApp = () => {
     if (status === "authenticated") {
       router.push("/backoffice/orders");
     }
-    if (status !== "loading" && status === "unauthenticated") {
+    if (status !== "loading" && status === "unauthenticated" && !data) {
       router.push("/auth/signin");
     }
-  }, [data, router]);
+  }, [data, router, status]);
 
   if (isLoading) return <Loading />;
   return null;
