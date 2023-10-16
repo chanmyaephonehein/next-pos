@@ -1,85 +1,114 @@
-import ItemCard from "@/components/ItemCard";
-import Loading from "@/components/Loading";
-import { useAppSelector } from "@/store/hooks";
+import { config } from "@/config";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addAddon } from "@/store/slices/addonsSlice";
 import { appData } from "@/store/slices/appSlice";
+import { addLocation } from "@/store/slices/locationsSlice";
+import { addTable } from "@/store/slices/tablesSlice";
 import { getSelectedLocationId } from "@/utils/client";
-import AddIcon from "@mui/icons-material/Add";
-import ClassIcon from "@mui/icons-material/Class";
-import { Box, Button } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
-import NewAddonCategory from "../addonCategories/NewAddonCategory";
 
-const AddonCategories = () => {
-  const selectedLocationId = getSelectedLocationId();
-  const {
-    isLoading,
-    addonCategories,
-    addons,
-    menusAddonCategories,
-    menusMenuCategoriesLocations,
-  } = useAppSelector(appData);
-  const [open, setOpen] = useState(false);
-  const validMenuIds = menusMenuCategoriesLocations
-    .filter(
-      (item) => item.menuId && item.locationId === Number(selectedLocationId)
-    )
-    .map((item) => item.menuId as number);
-  const validAddonCategoryIds = menusAddonCategories
-    .filter((item) => item.menuId && validMenuIds.includes(item.menuId))
-    .map((item) => item.addonCategoryId);
-  const validAddonCategories = addonCategories.filter((item) =>
-    validAddonCategoryIds.includes(item.id)
-  );
+interface Props {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+}
 
-  const getAddonsCount = (addonCategoryId?: number) => {
-    if (!addonCategoryId) return 0;
-    return addons.filter((item) => item.addonCategoryId === addonCategoryId)
-      .length;
+const NewAddon = ({ open, setOpen }: Props) => {
+  const { addonCategories } = useAppSelector(appData);
+  const [newAddon, setNewAddon] = useState({
+    name: "",
+    price: 0,
+    addonCategoryId: "",
+  });
+  const dispatch = useAppDispatch();
+
+  const createNewAddon = async () => {
+    const isValid = newAddon.name && newAddon.addonCategoryId;
+    if (!isValid)
+      return alert("Please enter addon name and select one addon category");
+    const response = await fetch(`${config.apiBaseUrl}/addons`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newAddon),
+    });
+    const addonCreated = await response.json();
+    dispatch(addAddon(addonCreated));
+    setOpen(false);
   };
 
-  if (isLoading) return <Loading />;
-
   return (
-    <Box>
-      <Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            onClick={() => setOpen(true)}
-            variant="contained"
-            startIcon={<AddIcon />}
-            sx={{
-              backgroundColor: "#4C4C6D",
-              width: "fit-content",
-              color: "#E8F6EF",
-              mb: 2,
-              ":hover": {
-                bgcolor: "#1B9C85", // theme.palette.primary.main
-                color: "white",
-              },
-            }}
+    <Dialog open={open} onClose={() => setOpen(false)}>
+      <DialogTitle>Create new addon</DialogTitle>
+      <DialogContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 300,
+        }}
+      >
+        <TextField
+          label="Name"
+          variant="outlined"
+          sx={{ mt: 1 }}
+          onChange={(evt) =>
+            setNewAddon({
+              ...newAddon,
+              name: evt.target.value,
+            })
+          }
+        />
+        <TextField
+          label="Price"
+          variant="outlined"
+          inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+          sx={{ my: 2 }}
+          onChange={(evt) =>
+            setNewAddon({
+              ...newAddon,
+              price: Number(evt.target.value),
+            })
+          }
+        />
+        <FormControl fullWidth>
+          <InputLabel>Addon Category</InputLabel>
+          <Select
+            value={newAddon.addonCategoryId}
+            label="Addon Category"
+            onChange={(evt) =>
+              setNewAddon({ ...newAddon, addonCategoryId: evt.target.value })
+            }
           >
-            New addon category
-          </Button>
-        </Box>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          {validAddonCategories.map((addonCategory) => (
-            <ItemCard
-              key={addonCategory.id}
-              icon={
-                <ClassIcon
-                  sx={{ fontSize: "60px", mb: 1.5, color: "#1B9C85" }}
-                />
-              }
-              href={`/backoffice/addonCategories/${addonCategory.id}`}
-              title={addonCategory.name}
-              subtitle={`${getAddonsCount(addonCategory.id)} addons`}
-            />
-          ))}
-        </Box>
-      </Box>
-      <NewAddonCategory open={open} setOpen={setOpen} />
-    </Box>
+            {addonCategories.map((item) => {
+              return (
+                <MenuItem value={item.id} key={item.id}>
+                  {item.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <Button
+          variant="contained"
+          onClick={createNewAddon}
+          sx={{ width: "fit-content", alignSelf: "flex-end", mt: 2 }}
+        >
+          Create
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default AddonCategories;
+export default NewAddon;
