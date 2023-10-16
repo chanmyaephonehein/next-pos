@@ -1,6 +1,8 @@
 import { Box, Button, Slide, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
 const Hero = () => {
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -44,6 +46,7 @@ const Hero = () => {
                 width: "fit-content",
                 backgroundColor: "#4C4C6D",
               }}
+              onClick={() => router.push("/orders")}
             >
               Order App
             </Button>
@@ -54,6 +57,7 @@ const Hero = () => {
                 width: "fit-content",
                 backgroundColor: "#4C4C6D",
               }}
+              onClick={() => router.push("/backoffice")}
             >
               Backoffice App
             </Button>
