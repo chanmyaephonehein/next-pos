@@ -14,8 +14,8 @@ export default async function middleware(req: NextRequest) {
 
   const isProtected = path.includes("/backoffice") || path.includes("/api");
 
-  // if (!session && isProtected) {
-  //   return NextResponse.redirect(new URL("/auth/signin", req.url));
-  // }
+  if (!session && isProtected) {
+    return NextResponse.redirect(new URL("/auth/signin", req.url));
+  }
   return NextResponse.next();
 }
