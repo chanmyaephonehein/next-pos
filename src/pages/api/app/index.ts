@@ -23,7 +23,6 @@ export default async function handler(
       data: {
         name,
         email,
-        assetUrl: "",
         companyId: newCompany.id,
       },
     });
