@@ -32,7 +32,7 @@ import {
 } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import RemoveMenuFromMenuCategory from "./RemoveMenuFromMenuCategory";
+import RemoveMenuFromMenuCategory from "./RemoveMenuFromMenuCategroy";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
