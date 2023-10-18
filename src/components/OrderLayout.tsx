@@ -14,7 +14,7 @@ const OrderLayout = (props: Props) => {
   const { query, isReady, ...router } = useRouter();
   const dispatch = useAppDispatch();
   const { items } = useAppSelector(selectCart);
-  const isHome = router.pathname === "/order";
+  const isHome = router.pathname === "/orders";
 
   useEffect(() => {
     if (isReady) {
