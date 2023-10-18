@@ -46,7 +46,7 @@ const Hero = () => {
                 width: "fit-content",
                 backgroundColor: "#4C4C6D",
               }}
-              onClick={() => router.push("/orders")}
+              onClick={() => router.push("/order")}
             >
               Order App
             </Button>
