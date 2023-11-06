@@ -74,7 +74,7 @@ const Menu = () => {
   };
 
   const handleAddonSelect = (selected: boolean, addon: Addon) => {
-    const addonCategory = addonCategories.find(
+    const addonCategory = validAddonCategories.find(
       (item) => item.id === addon.addonCategoryId
     ) as AddonCategory;
     if (addonCategory.isRequired) {
