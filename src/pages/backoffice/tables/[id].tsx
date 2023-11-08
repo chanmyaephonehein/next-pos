@@ -29,6 +29,7 @@ const EditTable = () => {
     });
     const tableUpdated = await response.json();
     dispatch(updateTable(tableUpdated));
+    router.push({ pathname: "/backoffice/tables" });
   };
 
   const handleDeleteTable = async () => {

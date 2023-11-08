@@ -37,6 +37,7 @@ const EditAddon = () => {
     });
     const addonUpdated = await response.json();
     dispatch(updateAddon(addonUpdated));
+    router.push({ pathname: "/backoffice/addons" });
   };
 
   const handleDeleteAddon = async () => {

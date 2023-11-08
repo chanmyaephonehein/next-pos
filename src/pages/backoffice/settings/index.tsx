@@ -14,9 +14,11 @@ import {
   TextField,
 } from "@mui/material";
 import { Companies as Company, Locations as Location } from "@prisma/client";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Settings = () => {
+  const router = useRouter();
   const { isLoading, company, locations } = useAppSelector(appData);
   const [newCompany, setNewCompany] = useState<Partial<Company>>({
     id: company?.id as number,
@@ -58,6 +60,7 @@ const Settings = () => {
       },
       body: JSON.stringify(newCompany),
     });
+    router.push({ pathname: "/backoffice/orders" });
   };
 
   if (isLoading) return <Loading />;

@@ -89,6 +89,7 @@ const EditMenuCategory = () => {
     const menuCategoryUpdated = await response.json();
     dispatch(updateMenuCategory(menuCategoryUpdated));
     dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
+    router.push({ pathname: "/backoffice/menuCategories" });
   };
 
   const addMenuToMenuCategory = async () => {

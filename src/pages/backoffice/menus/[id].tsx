@@ -56,6 +56,7 @@ const EditMenu = () => {
     const menuUpdated = await response.json();
     dispatch(updateMenu(menuUpdated));
     dispatch(fetchMenusMenuCategoriesLocations(selectedLocationId));
+    router.push({ pathname: "/backoffice/menus" });
   };
 
   const handleDeleteMenu = async () => {

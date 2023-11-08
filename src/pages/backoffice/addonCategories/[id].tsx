@@ -44,6 +44,7 @@ const EditAddonCategories = () => {
     });
     const addonCategoryUpdated = await response.json();
     dispatch(updateAddonCategory(addonCategoryUpdated));
+    router.push({ pathname: "/backoffice/addonCategories" });
   };
 
   const handleDeleteAddonCategory = async () => {

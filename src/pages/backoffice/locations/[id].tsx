@@ -39,6 +39,7 @@ const EditLocation = () => {
     });
     const locationUpdated = await response.json();
     dispatch(updateLocation(locationUpdated));
+    router.push({ pathname: "/backoffice/locations" });
   };
 
   const handleDeleteLocation = async () => {
