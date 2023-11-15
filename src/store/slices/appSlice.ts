@@ -18,13 +18,13 @@ import { setOrderlines } from "./orderlinesSlice";
 import { setOrders } from "./ordersSlice";
 import { setTables } from "./tablesSlice";
 
-interface AddonsState {
+interface AppState {
   isLoading: boolean;
   init: boolean;
   error: Error | null;
 }
 
-const initialState: AddonsState = {
+const initialState: AppState = {
   isLoading: false,
   init: false,
   error: null,
